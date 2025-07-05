@@ -1,0 +1,108 @@
+import { validateMetadata } from './src/utils/validateMetadata.js';
+
+console.log('🧪 Testing ERC-7730 Validator');
+console.log('================================');
+
+
+// Test 2: Invalid metadata (this should NOT throw)
+
+try {
+  const data = {
+    "$schema": "../../specs/erc7730-v1.schema.json",
+    "context": {
+      "eip712": {
+        "deployments": [
+          { "chainId": 1, "address": "0x0000000000000068f116a894984e2db1123eb395" }
+        ],
+        "domain": {
+          "name": "Seaport",
+          "version": "1.6",
+          "chainId": 1,
+          "verifyingContract": "0x0000000000000068f116a894984e2db1123eb395"
+        },
+        "schemas": [
+          {
+            "primaryType": "OrderComponents",
+            "types": {
+              "EIP712Domain": [
+                { "name": "name",    "type": "string"   },
+                { "name": "version", "type": "string"   },
+                { "name": "chainId", "type": "uint256"  },
+                { "name": "verifyingContract", "type": "address" }
+              ],
+              "OfferItem": [
+                { "name": "itemType",             "type": "uint8"    },
+                { "name": "token",                "type": "address"  },
+                { "name": "identifierOrCriteria", "type": "uint256"  },
+                { "name": "startAmount",          "type": "uint256"  },
+                { "name": "endAmount",            "type": "uint256"  }
+              ],
+              "ConsiderationItem": [
+                { "name": "itemType",             "type": "uint8"    },
+                { "name": "token",                "type": "address"  },
+                { "name": "identifierOrCriteria", "type": "uint256"  },
+                { "name": "startAmount",          "type": "uint256"  },
+                { "name": "endAmount",            "type": "uint256"  },
+                { "name": "recipient",            "type": "address"  }
+              ],
+              "OrderComponents": [
+                { "name": "offerer",       "type": "address"       },
+                { "name": "zone",          "type": "address"       },
+                { "name": "offer",         "type": "OfferItem[]"   },
+                { "name": "consideration", "type": "ConsiderationItem[]" },
+                { "name": "orderType",     "type": "uint8"         },
+                { "name": "startTime",     "type": "uint256"       },
+                { "name": "endTime",       "type": "uint256"       },
+                { "name": "zoneHash",      "type": "bytes32"       },
+                { "name": "salt",          "type": "uint256"       },
+                { "name": "conduitKey",    "type": "bytes32"       },
+                { "name": "counter",       "type": "uint256"       }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "metadata": {
+      "owner": "OpenSea",
+      "info": {
+        "legalName": "Ozone Networks, Inc.",
+        "url": "https://opensea.io",
+        "detailsUrl": "https://opensea.io/about"
+      }
+    },
+    "display": {
+      "formats": {
+        "OrderComponents": {
+          "intent": "OpenSea Listing (ERC-721 for ETH)",
+          "fields": [
+            { "path": "offer[0].token",                "label": "NFT contract", "format": "address"   },
+            { "path": "offer[0].identifierOrCriteria", "label": "Token ID",     "format": "decimal"   },
+            { "path": "consideration[0].startAmount",  "label": "Price (wei)",  "format": "decimal"   },
+            { "path": "endTime",                       "label": "Expiration",   "format": "timestamp" }
+          ],
+          "excluded": [
+            "zone",
+            "orderType",
+            "zoneHash",
+            "conduitKey",
+            "salt",
+            "counter",
+            "offer[0].itemType",
+            "offer[0].startAmount",
+            "offer[0].endAmount",
+            "consideration[0].itemType",
+            "consideration[0].token",
+            "consideration[0].identifierOrCriteria",
+            "consideration[0].endAmount",
+            "consideration[0].recipient"
+          ]
+        }
+      }
+    }
+  }
+  const result = validateMetadata(data);
+  console.log('Result:', result);
+} catch (error) {
+  console.log('❌ ERROR - Exception was thrown:', error.message);
+}

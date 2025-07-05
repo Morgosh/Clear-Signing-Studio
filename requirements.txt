@@ -1,0 +1,4 @@
+uagents==0.13.0
+requests
+colorama
+flask 
