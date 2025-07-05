@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { createERC7730Prompt } from '../utils/createERC7730Prompt'
 
 interface ContractData {
   projectName: string
@@ -9,6 +10,14 @@ interface ContractData {
   contractCode: string
   abi: string
   chainId: number
+}
+
+interface ABIItem {
+  type: string
+  name?: string
+  inputs?: unknown[]
+  outputs?: unknown[]
+  stateMutability?: string
 }
 
 const SAMPLE_CONTRACTS = {
@@ -77,20 +86,77 @@ export default function Home() {
     addResult(`🔄 Generating ERC-7730 metadata for ${contractData.projectName}...`)
 
     try {
-      const response = await fetch('/api/generate-erc7730', {
+      // Parse the ABI to get the first function for the prompt
+      const abiArray = JSON.parse(contractData.abi) as ABIItem[]
+      const functionAbi = abiArray.find((item: ABIItem) => item.type === 'function')
+      
+      if (!functionAbi) {
+        addResult('❌ No function found in ABI')
+        return
+      }
+
+      // Prepare contract info for the utility function
+      const contractInfo = {
+        name: contractData.projectName,
+        owner: contractData.projectName + ' Team',
+        legalName: contractData.projectName + ' Foundation',
+        url: 'https://example.com', // Default URL
+        address: contractData.contractAddress,
+        chainId: contractData.chainId
+      }
+
+      // Create the prompt payload using the utility function
+      const payload = createERC7730Prompt(
+        contractInfo,
+        functionAbi as any,
+        `Focus on user-friendly fields and exclude technical parameters. ${contractData.contractDescription ? 'Description: ' + contractData.contractDescription : ''}`
+      )
+
+      addResult(`🤖 Calling ASI API directly...`)
+
+      // Make the API call directly to ASI
+      const response = await fetch('https://api.asi1.ai/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(contractData),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_ASI_API_KEY || 'sk_3ff7b7e8fdfd43b2a848110cd43a9b8a670a3d6456d048489b26c2816c1af8a9'}`
+        },
+        body: JSON.stringify(payload)
       })
 
       const result = await response.json()
 
-      if (response.ok) {
-        addResult(`✅ Successfully generated ERC-7730 metadata`)
-        setGeneratedJson(result.erc7730Json)
-        addResult(`📄 Generated ${result.functionCount} function formats`)
+      if (response.ok && result.choices && result.choices[0]) {
+        const content = result.choices[0].message.content
+        
+        // Try to extract JSON from the response
+        const jsonMatch = content.match(/\{[\s\S]*\}/)
+        if (jsonMatch) {
+          try {
+            const extractedJson = JSON.parse(jsonMatch[0])
+            const formattedJson = JSON.stringify(extractedJson, null, 2)
+            
+            addResult(`✅ Successfully generated ERC-7730 metadata`)
+            setGeneratedJson(formattedJson)
+            
+            // Count functions in the generated metadata
+            const functionCount = extractedJson.display?.formats ? Object.keys(extractedJson.display.formats).length : 0
+            addResult(`📄 Generated ${functionCount} function formats`)
+            
+            if (result.usage) {
+              addResult(`📊 Used ${result.usage.total_tokens} tokens (${result.usage.prompt_tokens} prompt + ${result.usage.completion_tokens} completion)`)
+            }
+          } catch (parseError) {
+            addResult(`⚠️ Generated content but failed to parse JSON: ${parseError}`)
+            setGeneratedJson(content)
+          }
+        } else {
+          addResult(`⚠️ No JSON found in response`)
+          setGeneratedJson(content)
+        }
       } else {
-        addResult(`❌ Error: ${result.error}`)
+        addResult(`❌ ASI API Error: ${result.error?.message || 'Unknown error'}`)
       }
     } catch (error) {
       addResult(`❌ Network error: ${error}`)
