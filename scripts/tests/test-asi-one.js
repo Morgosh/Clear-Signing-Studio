@@ -4,8 +4,12 @@ const payload = {
   model: 'asi1-mini',
   messages: [
     {
+      role: 'system',
+      content: 'asdf'
+    },
+    {
       role: 'user',
-      content: '"@7730 agent" Generate ERC-7730 for contract 0xA0b86a33E6441d6F71c2F6d8b0A8f6A7f8d6e7c5 named USDC'
+      content: 'hey how are you?'
     }
   ],
   temperature: 0,
@@ -24,6 +28,25 @@ fetch(url, {
   headers,
   body: JSON.stringify(payload)
 })
-  .then(response => response.text())
-  .then(console.log)
+  .then(response => response.json())
+  .then(data => {
+    console.log('🤖 ASI Response:');
+    console.log('================');
+    
+    if (data.choices && data.choices.length > 0) {
+      const message = data.choices[0].message;
+      console.log(`Role: ${message.role}`);
+      console.log(`Content: ${message.content}`);
+      
+      if (data.usage) {
+        console.log('\n📊 Usage Stats:');
+        console.log(`- Prompt tokens: ${data.usage.prompt_tokens}`);
+        console.log(`- Completion tokens: ${data.usage.completion_tokens}`);
+        console.log(`- Total tokens: ${data.usage.total_tokens}`);
+      }
+    } else {
+      console.log('No response choices found');
+      console.log('Raw response:', data);
+    }
+  })
   .catch(console.error);
