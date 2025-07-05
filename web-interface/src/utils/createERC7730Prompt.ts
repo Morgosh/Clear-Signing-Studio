@@ -53,7 +53,7 @@ Here are two examples of proper ERC-7730 structure:
 
 **Example 1: Contract Calldata (ERC20)**
 {
-  "$schema": "../specs/erc7730-v1.schema.json",
+  "$schema": "../../specs/erc7730-v1.schema.json",
   "context": {
     "contract": {
       "abi": [
@@ -105,7 +105,7 @@ Here are two examples of proper ERC-7730 structure:
 
 **Example 2: EIP712 Signature (Uniswap)**
 {
-  "$schema": "../specs/erc7730-v1.schema.json",
+  "$schema": "../../specs/erc7730-v1.schema.json",
   "context": {
     "eip712": {
       "deployments": [
