@@ -111,211 +111,11 @@
                 }
               ],
               "internalType": "struct BasicOrderParameters",
-              "name": "",
+              "name": "parameters",
               "type": "tuple"
             }
           ],
-          "name": "fulfillBasicOrder",
-          "outputs": [
-            { "internalType": "bool", "name": "fulfilled", "type": "bool" }
-          ],
-          "stateMutability": "payable",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "components": [
-                {
-                  "components": [
-                    {
-                      "internalType": "address",
-                      "name": "offerer",
-                      "type": "address"
-                    },
-                    {
-                      "internalType": "address",
-                      "name": "zone",
-                      "type": "address"
-                    },
-                    {
-                      "components": [
-                        {
-                          "internalType": "enum ItemType",
-                          "name": "itemType",
-                          "type": "uint8"
-                        },
-                        {
-                          "internalType": "address",
-                          "name": "token",
-                          "type": "address"
-                        },
-                        {
-                          "internalType": "uint256",
-                          "name": "identifierOrCriteria",
-                          "type": "uint256"
-                        },
-                        {
-                          "internalType": "uint256",
-                          "name": "startAmount",
-                          "type": "uint256"
-                        },
-                        {
-                          "internalType": "uint256",
-                          "name": "endAmount",
-                          "type": "uint256"
-                        }
-                      ],
-                      "internalType": "struct OfferItem[]",
-                      "name": "offer",
-                      "type": "tuple[]"
-                    },
-                    {
-                      "components": [
-                        {
-                          "internalType": "enum ItemType",
-                          "name": "itemType",
-                          "type": "uint8"
-                        },
-                        {
-                          "internalType": "address",
-                          "name": "token",
-                          "type": "address"
-                        },
-                        {
-                          "internalType": "uint256",
-                          "name": "identifierOrCriteria",
-                          "type": "uint256"
-                        },
-                        {
-                          "internalType": "uint256",
-                          "name": "startAmount",
-                          "type": "uint256"
-                        },
-                        {
-                          "internalType": "uint256",
-                          "name": "endAmount",
-                          "type": "uint256"
-                        },
-                        {
-                          "internalType": "address payable",
-                          "name": "recipient",
-                          "type": "address"
-                        }
-                      ],
-                      "internalType": "struct ConsiderationItem[]",
-                      "name": "consideration",
-                      "type": "tuple[]"
-                    },
-                    {
-                      "internalType": "enum OrderType",
-                      "name": "orderType",
-                      "type": "uint8"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "startTime",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "endTime",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "bytes32",
-                      "name": "zoneHash",
-                      "type": "bytes32"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "salt",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "bytes32",
-                      "name": "conduitKey",
-                      "type": "bytes32"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "totalOriginalConsiderationItems",
-                      "type": "uint256"
-                    }
-                  ],
-                  "internalType": "struct OrderParameters",
-                  "name": "parameters",
-                  "type": "tuple"
-                },
-                {
-                  "internalType": "uint120",
-                  "name": "numerator",
-                  "type": "uint120"
-                },
-                {
-                  "internalType": "uint120",
-                  "name": "denominator",
-                  "type": "uint120"
-                },
-                {
-                  "internalType": "bytes",
-                  "name": "signature",
-                  "type": "bytes"
-                },
-                {
-                  "internalType": "bytes",
-                  "name": "extraData",
-                  "type": "bytes"
-                }
-              ],
-              "internalType": "struct AdvancedOrder",
-              "name": "",
-              "type": "tuple"
-            },
-            {
-              "components": [
-                {
-                  "internalType": "uint256",
-                  "name": "orderIndex",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "enum Side",
-                  "name": "side",
-                  "type": "uint8"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "index",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "identifier",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "bytes32[]",
-                  "name": "criteriaProof",
-                  "type": "bytes32[]"
-                }
-              ],
-              "internalType": "struct CriteriaResolver[]",
-              "name": "",
-              "type": "tuple[]"
-            },
-            {
-              "internalType": "bytes32",
-              "name": "fulfillerConduitKey",
-              "type": "bytes32"
-            },
-            {
-              "internalType": "address",
-              "name": "recipient",
-              "type": "address"
-            }
-          ],
-          "name": "fulfillAdvancedOrder",
+          "name": "fulfillBasicOrder_efficient_6GL6yc",
           "outputs": [
             { "internalType": "bool", "name": "fulfilled", "type": "bool" }
           ],
@@ -342,13 +142,16 @@
 
   "display": {
     "formats": {
-      "fulfillBasicOrder(BasicOrderParameters parameters)": {
+      "0x00000000": {
         "intent": "Buy NFT (Basic Order)",
         "fields": [
           {
             "path": "#.parameters.offerToken",
             "label": "NFT contract",
-            "format": "addressName"
+            "format": "addressName",
+            "params": {
+              "types": ["contract", "token"]
+            }
           },
           {
             "path": "#.parameters.offerIdentifier",
@@ -358,7 +161,10 @@
           {
             "path": "#.parameters.considerationToken",
             "label": "Payment token",
-            "format": "addressName"
+            "format": "addressName",
+            "params": {
+              "types": ["contract", "token"]
+            }
           },
           {
             "path": "#.parameters.considerationAmount",
@@ -369,7 +175,10 @@
           {
             "path": "#.parameters.offerer",
             "label": "Seller",
-            "format": "addressName"
+            "format": "addressName",
+            "params": {
+              "types": ["wallet", "eoa"]
+            }
           }
         ],
         "excluded": [
@@ -386,56 +195,6 @@
           "#.parameters.totalOriginalAdditionalRecipients",
           "#.parameters.additionalRecipients",
           "#.parameters.signature"
-        ]
-      },
-
-      "fulfillAdvancedOrder(AdvancedOrder advancedOrder,CriteriaResolver[] criteriaResolvers,bytes32 fulfillerConduitKey,address recipient)": {
-        "intent": "Buy/Fill NFT Order",
-        "fields": [
-          {
-            "path": "#.advancedOrder.parameters.offer.[0].token",
-            "label": "NFT contract",
-            "format": "addressName"
-          },
-          {
-            "path": "#.advancedOrder.parameters.offer.[0].identifierOrCriteria",
-            "label": "Token ID / Criteria",
-            "format": "raw"
-          },
-          {
-            "path": "#.advancedOrder.parameters.offerer",
-            "label": "Seller",
-            "format": "addressName"
-          },
-          {
-            "path": "#.recipient",
-            "label": "Recipient",
-            "format": "addressName"
-          }
-        ],
-        "excluded": [
-          "#.advancedOrder.parameters.offer.[0].itemType",
-          "#.advancedOrder.parameters.offer.[0].startAmount",
-          "#.advancedOrder.parameters.offer.[0].endAmount",
-          "#.advancedOrder.parameters.consideration.[0].itemType",
-          "#.advancedOrder.parameters.consideration.[0].startAmount",
-          "#.advancedOrder.parameters.consideration.[0].endAmount",
-          "#.advancedOrder.parameters.consideration.[0].recipient",
-          "#.advancedOrder.parameters.consideration.[0].token",
-          "#.advancedOrder.parameters.orderType",
-          "#.advancedOrder.parameters.startTime",
-          "#.advancedOrder.parameters.endTime",
-          "#.advancedOrder.parameters.zone",
-          "#.advancedOrder.parameters.zoneHash",
-          "#.advancedOrder.parameters.salt",
-          "#.advancedOrder.parameters.conduitKey",
-          "#.advancedOrder.parameters.counter",
-          "#.criteriaResolvers",
-          "#.fulfillerConduitKey",
-          "#.advancedOrder.signature",
-          "#.advancedOrder.numerator",
-          "#.advancedOrder.denominator",
-          "#.advancedOrder.extraData"
         ]
       }
     }

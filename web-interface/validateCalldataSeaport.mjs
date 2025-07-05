@@ -120,7 +120,7 @@ try {
                   }
                 ],
                 "internalType": "struct BasicOrderParameters",
-                "name": "",
+                "name": "parameters",
                 "type": "tuple"
               }
             ],
@@ -278,7 +278,7 @@ try {
                   }
                 ],
                 "internalType": "struct AdvancedOrder",
-                "name": "",
+                "name": "advancedOrder",
                 "type": "tuple"
               },
               {
@@ -310,7 +310,7 @@ try {
                   }
                 ],
                 "internalType": "struct CriteriaResolver[]",
-                "name": "",
+                "name": "criteriaResolvers",
                 "type": "tuple[]"
               },
               {
@@ -357,7 +357,10 @@ try {
             {
               "path": "#.parameters.offerToken",
               "label": "NFT contract",
-              "format": "addressName"
+              "format": "addressName",
+              "params": {
+                "types": ["contract", "token"]
+              }
             },
             {
               "path": "#.parameters.offerIdentifier",
@@ -367,7 +370,10 @@ try {
             {
               "path": "#.parameters.considerationToken",
               "label": "Payment token",
-              "format": "addressName"
+              "format": "addressName",
+              "params": {
+                "types": ["contract", "token"]
+              }
             },
             {
               "path": "#.parameters.considerationAmount",
@@ -378,7 +384,10 @@ try {
             {
               "path": "#.parameters.offerer",
               "label": "Seller",
-              "format": "addressName"
+              "format": "addressName",
+              "params": {
+                "types": ["wallet", "eoa"]
+              }
             }
           ],
           "excluded": [
@@ -404,7 +413,10 @@ try {
             {
               "path": "#.advancedOrder.parameters.offer.[0].token",
               "label": "NFT contract",
-              "format": "addressName"
+              "format": "addressName",
+              "params": {
+                "types": ["contract", "token"]
+              }
             },
             {
               "path": "#.advancedOrder.parameters.offer.[0].identifierOrCriteria",
@@ -414,12 +426,18 @@ try {
             {
               "path": "#.advancedOrder.parameters.offerer",
               "label": "Seller",
-              "format": "addressName"
+              "format": "addressName",
+              "params": {
+                "types": ["wallet", "eoa"]
+              }
             },
             {
               "path": "#.recipient",
               "label": "Recipient",
-              "format": "addressName"
+              "format": "addressName",
+              "params": {
+                "types": ["wallet", "eoa"]
+              }
             }
           ],
           "excluded": [
@@ -450,6 +468,7 @@ try {
       }
     }
   }
+  
   
   
   const result = validateMetadata(data);
