@@ -21,6 +21,56 @@ interface ABIItem {
 }
 
 const SAMPLE_CONTRACTS = {
+  seaport: {
+    projectName: 'OpenSea Seaport',
+    contractAddress: '0x0000000000000068f116a894984e2db1123eb395',
+    contractDescription: 'OpenSea Seaport protocol for NFT marketplace transactions and basic order fulfillment',
+    contractCode: 'pragma solidity ^0.8.0; contract Seaport { function fulfillBasicOrder_efficient_6GL6yc(BasicOrderParameters calldata parameters) external payable returns (bool fulfilled); }',
+    abi: JSON.stringify([
+      {
+        "inputs": [
+          {
+            "components": [
+              {"internalType": "address", "name": "considerationToken", "type": "address"},
+              {"internalType": "uint256", "name": "considerationIdentifier", "type": "uint256"},
+              {"internalType": "uint256", "name": "considerationAmount", "type": "uint256"},
+              {"internalType": "address payable", "name": "offerer", "type": "address"},
+              {"internalType": "address", "name": "zone", "type": "address"},
+              {"internalType": "address", "name": "offerToken", "type": "address"},
+              {"internalType": "uint256", "name": "offerIdentifier", "type": "uint256"},
+              {"internalType": "uint256", "name": "offerAmount", "type": "uint256"},
+              {"internalType": "enum BasicOrderType", "name": "basicOrderType", "type": "uint8"},
+              {"internalType": "uint256", "name": "startTime", "type": "uint256"},
+              {"internalType": "uint256", "name": "endTime", "type": "uint256"},
+              {"internalType": "bytes32", "name": "zoneHash", "type": "bytes32"},
+              {"internalType": "uint256", "name": "salt", "type": "uint256"},
+              {"internalType": "bytes32", "name": "offererConduitKey", "type": "bytes32"},
+              {"internalType": "bytes32", "name": "fulfillerConduitKey", "type": "bytes32"},
+              {"internalType": "uint256", "name": "totalOriginalAdditionalRecipients", "type": "uint256"},
+              {
+                "components": [
+                  {"internalType": "uint256", "name": "amount", "type": "uint256"},
+                  {"internalType": "address payable", "name": "recipient", "type": "address"}
+                ],
+                "internalType": "struct AdditionalRecipient[]",
+                "name": "additionalRecipients",
+                "type": "tuple[]"
+              },
+              {"internalType": "bytes", "name": "signature", "type": "bytes"}
+            ],
+            "internalType": "struct BasicOrderParameters",
+            "name": "parameters",
+            "type": "tuple"
+          }
+        ],
+        "name": "fulfillBasicOrder_efficient_6GL6yc",
+        "outputs": [{"internalType": "bool", "name": "fulfilled", "type": "bool"}],
+        "stateMutability": "payable",
+        "type": "function"
+      }
+    ], null, 2),
+    chainId: 1
+  },
   usdc: {
     projectName: 'USD Coin',
     contractAddress: '0xA0b86991c31cC27bDC9d30dDC89e7bF0671f18b8C',
@@ -32,31 +82,57 @@ const SAMPLE_CONTRACTS = {
       {"type":"function","name":"balanceOf","inputs":[{"name":"account","type":"address"}]}
     ], null, 2),
     chainId: 1
-  },
-  weth: {
-    projectName: 'Wrapped Ether',
-    contractAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-    contractDescription: 'WETH is an ERC-20 token that represents Ether',
-    contractCode: 'pragma solidity ^0.8.0; contract WETH { function deposit() public payable; function withdraw(uint256 amount) public; }',
-    abi: JSON.stringify([
-      {"type":"function","name":"deposit","inputs":[]},
-      {"type":"function","name":"withdraw","inputs":[{"name":"amount","type":"uint256"}]},
-      {"type":"function","name":"transfer","inputs":[{"name":"to","type":"address"},{"name":"amount","type":"uint256"}]}
-    ], null, 2),
-    chainId: 1
   }
 }
 
 export default function Home() {
   const [contractData, setContractData] = useState<ContractData>({
-    projectName: 'USD Coin',
-    contractAddress: '0xA0b86991c31cC27bDC9d30dDC89e7bF0671f18b8C',
-    contractDescription: 'USDC is a fully collateralized US dollar stablecoin that provides digital dollar liquidity to the global financial system.',
-    contractCode: 'pragma solidity ^0.8.0;\n\ncontract USDC {\n    function transfer(address to, uint256 amount) public returns (bool);\n    function approve(address spender, uint256 amount) public returns (bool);\n    function balanceOf(address account) public view returns (uint256);\n}',
+    projectName: 'OpenSea Seaport',
+    contractAddress: '0x0000000000000068f116a894984e2db1123eb395',
+    contractDescription: 'OpenSea Seaport protocol for NFT marketplace transactions. Enables efficient NFT trading with basic order fulfillment for buying and selling digital assets.',
+    contractCode: 'pragma solidity ^0.8.0;\n\ncontract Seaport {\n    function fulfillBasicOrder_efficient_6GL6yc(\n        BasicOrderParameters calldata parameters\n    ) external payable returns (bool fulfilled);\n}',
     abi: JSON.stringify([
-      {"type":"function","name":"transfer","inputs":[{"name":"to","type":"address"},{"name":"amount","type":"uint256"}],"outputs":[{"name":"","type":"bool"}],"stateMutability":"nonpayable"},
-      {"type":"function","name":"approve","inputs":[{"name":"spender","type":"address"},{"name":"amount","type":"uint256"}],"outputs":[{"name":"","type":"bool"}],"stateMutability":"nonpayable"},
-      {"type":"function","name":"balanceOf","inputs":[{"name":"account","type":"address"}],"outputs":[{"name":"","type":"uint256"}],"stateMutability":"view"}
+      {
+        "inputs": [
+          {
+            "components": [
+              {"internalType": "address", "name": "considerationToken", "type": "address"},
+              {"internalType": "uint256", "name": "considerationIdentifier", "type": "uint256"},
+              {"internalType": "uint256", "name": "considerationAmount", "type": "uint256"},
+              {"internalType": "address payable", "name": "offerer", "type": "address"},
+              {"internalType": "address", "name": "zone", "type": "address"},
+              {"internalType": "address", "name": "offerToken", "type": "address"},
+              {"internalType": "uint256", "name": "offerIdentifier", "type": "uint256"},
+              {"internalType": "uint256", "name": "offerAmount", "type": "uint256"},
+              {"internalType": "enum BasicOrderType", "name": "basicOrderType", "type": "uint8"},
+              {"internalType": "uint256", "name": "startTime", "type": "uint256"},
+              {"internalType": "uint256", "name": "endTime", "type": "uint256"},
+              {"internalType": "bytes32", "name": "zoneHash", "type": "bytes32"},
+              {"internalType": "uint256", "name": "salt", "type": "uint256"},
+              {"internalType": "bytes32", "name": "offererConduitKey", "type": "bytes32"},
+              {"internalType": "bytes32", "name": "fulfillerConduitKey", "type": "bytes32"},
+              {"internalType": "uint256", "name": "totalOriginalAdditionalRecipients", "type": "uint256"},
+              {
+                "components": [
+                  {"internalType": "uint256", "name": "amount", "type": "uint256"},
+                  {"internalType": "address payable", "name": "recipient", "type": "address"}
+                ],
+                "internalType": "struct AdditionalRecipient[]",
+                "name": "additionalRecipients",
+                "type": "tuple[]"
+              },
+              {"internalType": "bytes", "name": "signature", "type": "bytes"}
+            ],
+            "internalType": "struct BasicOrderParameters",
+            "name": "parameters",
+            "type": "tuple"
+          }
+        ],
+        "name": "fulfillBasicOrder_efficient_6GL6yc",
+        "outputs": [{"internalType": "bool", "name": "fulfilled", "type": "bool"}],
+        "stateMutability": "payable",
+        "type": "function"
+      }
     ], null, 2),
     chainId: 1
   })
@@ -98,9 +174,9 @@ export default function Home() {
       // Prepare contract info for the utility function
       const contractInfo = {
         name: contractData.projectName,
-        owner: contractData.projectName + ' Team',
-        legalName: contractData.projectName + ' Foundation',
-        url: 'https://example.com', // Default URL
+        owner: contractData.projectName.includes('OpenSea') ? 'OpenSea' : contractData.projectName + ' Team',
+        legalName: contractData.projectName.includes('OpenSea') ? 'Ozone Networks, Inc.' : contractData.projectName + ' Foundation',
+        url: contractData.projectName.includes('OpenSea') ? 'https://opensea.io' : 'https://example.com',
         address: contractData.contractAddress,
         chainId: contractData.chainId
       }
@@ -216,16 +292,16 @@ export default function Home() {
             
             <div className="flex gap-2 mb-4">
               <button
-                onClick={() => loadSampleContract('usdc')}
+                onClick={() => loadSampleContract('seaport')}
                 className="bg-blue-500 text-white px-4 py-2 rounded text-sm hover:bg-blue-600"
               >
-                Load USDC Sample
+                Load Seaport Sample
               </button>
               <button
-                onClick={() => loadSampleContract('weth')}
+                onClick={() => loadSampleContract('usdc')}
                 className="bg-purple-500 text-white px-4 py-2 rounded text-sm hover:bg-purple-600"
               >
-                Load WETH Sample
+                Load USDC Sample
               </button>
             </div>
 
