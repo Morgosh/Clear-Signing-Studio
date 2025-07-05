@@ -1,0 +1,172 @@
+{
+  "$schema": "../../specs/erc7730-v1.schema.json",
+  "context": {
+    "contract": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "considerationToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "considerationAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address payable",
+                  "name": "offerer",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "offerToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "offerIdentifier",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "offerAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "startTime",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "endTime",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "amount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address payable",
+                      "name": "recipient",
+                      "type": "address"
+                    }
+                  ],
+                  "internalType": "struct AdditionalRecipient[]",
+                  "name": "additionalRecipients",
+                  "type": "tuple[]"
+                }
+              ],
+              "internalType": "struct BasicOrderParameters",
+              "name": "parameters",
+              "type": "tuple"
+            }
+          ],
+          "name": "fulfillBasicOrder_efficient_6GL6yc",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "fulfilled",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "payable",
+          "type": "function"
+        }
+      ],
+      "deployments": [
+        {
+          "chainId": 1,
+          "address": "0x0000000000000068f116a894984e2db1123eb395"
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "owner": "OpenSea",
+    "info": {
+      "legalName": "Ozone Networks, Inc.",
+      "url": "https://opensea.io"
+    }
+  },
+  "display": {
+    "formats": {
+      "fulfillBasicOrder_efficient_6GL6yc((address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes))": {
+        "intent": "OpenSea NFT Trade",
+        "fields": [
+          {
+            "path": "#.parameters.offerToken",
+            "label": "NFT Collection",
+            "format": "addressName",
+            "params": {
+              "types": [
+                "nft"
+              ]
+            }
+          },
+          {
+            "path": "#.parameters.offerIdentifier",
+            "label": "NFT ID",
+            "format": "tokenId"
+          },
+          {
+            "path": "#.parameters.considerationToken",
+            "label": "Payment Token",
+            "format": "addressName",
+            "params": {
+              "types": [
+                "token"
+              ]
+            }
+          },
+          {
+            "path": "#.parameters.considerationAmount",
+            "label": "Price",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "#.parameters.considerationToken"
+            }
+          },
+          {
+            "path": "#.parameters.offerer",
+            "label": "Seller",
+            "format": "addressName"
+          },
+          {
+            "path": "#.parameters.offerAmount",
+            "label": "Quantity",
+            "format": "number"
+          },
+          {
+            "path": "#.parameters.startTime",
+            "label": "Start Time",
+            "format": "timestamp"
+          },
+          {
+            "path": "#.parameters.endTime",
+            "label": "End Time",
+            "format": "timestamp"
+          }
+        ],
+        "excluded": [
+          "#.parameters.zone",
+          "#.parameters.basicOrderType",
+          "#.parameters.zoneHash",
+          "#.parameters.salt",
+          "#.parameters.offererConduitKey",
+          "#.parameters.fulfillerConduitKey",
+          "#.parameters.totalOriginalAdditionalRecipients",
+          "#.parameters.signature"
+        ]
+      }
+    }
+  }
+}
