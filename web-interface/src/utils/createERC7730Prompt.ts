@@ -47,7 +47,7 @@ interface PromptPayload {
  * @returns Formatted payload for ASI API
  */
 export function createERC7730Prompt(contractInfo: ContractInfo, abi: ABI, additionalInstructions: string = ''): PromptPayload {
-  const systemPrompt = `You are an ERC-7730 metadata generator. ERC-7730 is a standard for describing smart contract transaction intents in a user-friendly way.
+  const systemPrompt = `You are a Clear Signing Studio metadata generator. ERC-7730 is a standard for describing smart contract transaction intents in a user-friendly way.
 
 Here are two examples of proper ERC-7730 structure:
 
@@ -245,7 +245,7 @@ export function createSimpleERC7730Prompt(contractAddress: string, contractName:
     messages: [
       {
         role: 'system',
-        content: 'You are an ERC-7730 metadata generator. Generate valid ERC-7730 JSON metadata for smart contracts.'
+        content: 'You are a Clear Signing Studio metadata generator. Generate valid ERC-7730 JSON metadata for smart contracts.'
       },
       {
         role: 'user',

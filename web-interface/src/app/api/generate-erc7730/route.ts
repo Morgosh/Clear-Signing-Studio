@@ -64,7 +64,7 @@ Please create the complete ERC-7730 JSON metadata for Ledger clear signing.`;
           messages: [
             {
               role: "system",
-              content: "You are an expert in ERC-7730 metadata generation for smart contracts. Generate valid ERC-7730 JSON metadata for Ledger clear signing. Always respond with properly formatted JSON."
+              content: "You are an expert Clear Signing Studio agent for smart contracts. Generate valid ERC-7730 JSON metadata for Ledger clear signing. Always respond with properly formatted JSON."
             },
             {
               role: "user",

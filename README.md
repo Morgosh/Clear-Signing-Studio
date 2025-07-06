@@ -1,10 +1,10 @@
-# ERC-7730 Clear Signing Studio
+# Clear Signing Studio
 
 An intelligent toolkit for creating, validating, and managing ERC-7730 clear signing metadata, with examples for Seaport marketplace EIP-712 and calldata implementations.
 
 ## 🚀 Overview
 
-ERC-7730 Clear Signing Studio is a comprehensive solution for working with ERC-7730 clear signing metadata - the emerging standard for providing human-readable descriptions of smart contract interactions. This project focuses on making complex DeFi and NFT transactions more accessible by generating clear, user-friendly transaction descriptions for hardware wallets and signing interfaces. Powered by ASI AI for intelligent ERC-7730 suggestions and includes complete examples for Seaport marketplace covering both EIP-712 and calldata scenarios.
+Clear Signing Studio is a comprehensive solution for working with ERC-7730 clear signing metadata - the emerging standard for providing human-readable descriptions of smart contract interactions. This project focuses on making complex DeFi and NFT transactions more accessible by generating clear, user-friendly transaction descriptions for hardware wallets and signing interfaces. Powered by ASI AI for intelligent ERC-7730 suggestions and includes complete examples for Seaport marketplace covering both EIP-712 and calldata scenarios.
 
 ### Key Features
 

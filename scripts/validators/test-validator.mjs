@@ -58,7 +58,7 @@ try {
       }
     },
     metadata: {
-      owner: 'ERC-7730 Agent',
+      owner: 'Clear Signing Studio',
       info: {
         legalName: 'USDC',
         lastUpdate: new Date().toISOString(),

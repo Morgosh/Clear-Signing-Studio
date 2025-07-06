@@ -1,4 +1,4 @@
-# ERC-7730 Clear Signing Examples
+# Clear Signing Studio Examples
 
 This directory contains complete examples of ERC-7730 clear signing implementations for different protocols and use cases.
 

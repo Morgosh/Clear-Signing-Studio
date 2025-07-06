@@ -30,7 +30,7 @@ export function generateERC7730Fallback(body: ContractData): ERC7730Result {
       }
     },
     metadata: {
-      owner: "ERC-7730 Generator",
+              owner: "Clear Signing Studio",
       info: {
         url: `https://etherscan.io/address/${body.contractAddress}`,
         legalName: body.projectName,
