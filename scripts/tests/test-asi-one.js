@@ -64,7 +64,7 @@ const payload = createERC7730Prompt(contractInfo, abi, additionalInstructions);
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer sk_3ff7b7e8fdfd43b2a848110cd43a9b8a670a3d6456d048489b26c2816c1af8a9'  // Replace with your actual API key
+  'Authorization': `Bearer ${process.env.NEXT_PUBLIC_ASI_API_KEY}`
 };
 
 fetch(url, {

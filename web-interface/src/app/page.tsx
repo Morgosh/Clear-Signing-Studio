@@ -196,7 +196,7 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_ASI_API_KEY || 'sk_3ff7b7e8fdfd43b2a848110cd43a9b8a670a3d6456d048489b26c2816c1af8a9'}`
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_ASI_API_KEY}`
         },
         body: JSON.stringify(payload)
       })
