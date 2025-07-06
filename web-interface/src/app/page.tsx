@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { createERC7730Prompt } from '../utils/createERC7730Prompt'
+import { validateMetadata } from '../utils/validateMetadata.js'
 
 interface ContractData {
   projectName: string
@@ -18,6 +19,12 @@ interface ABIItem {
   inputs?: unknown[]
   outputs?: unknown[]
   stateMutability?: string
+}
+
+interface ValidationResult {
+  valid: boolean
+  errors: any[] | null | undefined
+  contextType: string
 }
 
 const SAMPLE_CONTRACTS = {
@@ -140,6 +147,7 @@ export default function Home() {
   const [results, setResults] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [generatedJson, setGeneratedJson] = useState<string>('')
+  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null)
 
   const addResult = (message: string) => {
     const timestamp = new Date().toLocaleTimeString()
@@ -149,6 +157,8 @@ export default function Home() {
   const loadSampleContract = (sampleKey: keyof typeof SAMPLE_CONTRACTS) => {
     const sample = SAMPLE_CONTRACTS[sampleKey]
     setContractData(sample)
+    setGeneratedJson('')
+    setValidationResult(null)
     addResult(`Loaded ${sample.projectName} sample contract`)
   }
 
@@ -159,6 +169,7 @@ export default function Home() {
     }
 
     setIsLoading(true)
+    setValidationResult(null)
     addResult(`🔄 Generating ERC-7730 metadata for ${contractData.projectName}...`)
 
     try {
@@ -213,6 +224,21 @@ export default function Home() {
             const extractedJson = JSON.parse(jsonMatch[0])
             const formattedJson = JSON.stringify(extractedJson, null, 2)
             
+            // Validate the generated metadata
+            addResult(`🔍 Validating generated ERC-7730 metadata...`)
+            const validation = validateMetadata(extractedJson)
+            setValidationResult(validation)
+            
+            if (validation.valid) {
+              addResult(`✅ ERC-7730 metadata is valid! Context type: ${validation.contextType}`)
+            } else {
+              const errorCount = validation.errors?.length || 0
+              addResult(`⚠️ ERC-7730 metadata has validation issues: ${errorCount} errors found`)
+              validation.errors?.forEach((error, index) => {
+                addResult(`   Error ${index + 1}: ${error.instancePath} ${error.message}`)
+              })
+            }
+            
             addResult(`✅ Successfully generated ERC-7730 metadata`)
             setGeneratedJson(formattedJson)
             
@@ -226,10 +252,12 @@ export default function Home() {
           } catch (parseError) {
             addResult(`⚠️ Generated content but failed to parse JSON: ${parseError}`)
             setGeneratedJson(content)
+            setValidationResult(null)
           }
         } else {
           addResult(`⚠️ No JSON found in response`)
           setGeneratedJson(content)
+          setValidationResult(null)
         }
       } else {
         addResult(`❌ ASI API Error: ${result.error?.message || 'Unknown error'}`)
@@ -281,6 +309,15 @@ export default function Home() {
             <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
               🔒 ERC-7730 Compliant
             </span>
+            {validationResult && (
+              <span className={`px-3 py-1 rounded-full text-sm ${
+                validationResult.valid 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-orange-100 text-orange-800'
+              }`}>
+                {validationResult.valid ? '✅ Valid Metadata' : '⚠️ Validation Issues'}
+              </span>
+            )}
           </div>
         </div>
 
@@ -409,7 +446,18 @@ export default function Home() {
             {generatedJson && (
               <div className="bg-white rounded-lg shadow-lg p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold">📄 Generated ERC-7730 JSON</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold">📄 Generated ERC-7730 JSON</h3>
+                    {validationResult && (
+                      <span className={`px-2 py-1 rounded text-xs ${
+                        validationResult.valid 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-orange-100 text-orange-800'
+                      }`}>
+                        {validationResult.valid ? '✅ Valid' : `⚠️ ${validationResult.errors?.length || 0} errors`}
+                      </span>
+                    )}
+                  </div>
                   <div className="flex gap-2">
                     <button
                       onClick={copyToClipboard}
@@ -425,6 +473,19 @@ export default function Home() {
                     </button>
                   </div>
                 </div>
+                {validationResult && !validationResult.valid && (
+                  <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-md">
+                    <p className="text-sm text-orange-800 font-medium mb-1">Validation Issues:</p>
+                    <ul className="text-xs text-orange-700 space-y-1">
+                      {validationResult.errors?.slice(0, 3).map((error, index) => (
+                        <li key={index}>• {error.instancePath || 'root'}: {error.message}</li>
+                      ))}
+                                             {(validationResult.errors?.length || 0) > 3 && (
+                         <li>• ... and {(validationResult.errors?.length || 0) - 3} more errors</li>
+                       )}
+                    </ul>
+                  </div>
+                )}
                 <pre className="bg-gray-900 text-green-400 p-4 rounded-md text-xs overflow-x-auto max-h-96 overflow-y-auto">
                   {generatedJson}
                 </pre>
