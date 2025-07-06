@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     // Validate ABI format
     try {
       JSON.parse(body.abi)
-    } catch (error) {
+    } catch (_error) {  
       return NextResponse.json(
         { error: 'Invalid ABI format. Please provide a valid JSON array.' },
         { status: 400 }
@@ -105,7 +105,7 @@ Please create the complete ERC-7730 JSON metadata for Ledger clear signing.`;
                     message: `Generated via ASI:One: ${body.projectName}`
                   });
                 }
-              } catch (e) {
+              } catch (_e) {  
                 console.log('Could not parse JSON from ASI:One response');
               }
             }
